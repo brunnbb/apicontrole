@@ -104,6 +104,31 @@ public class DatabaseDriver {
         }
     }
 
+    // Metodo que verifica se determinado valor existe no db
+    // Parametros: nome da tabela, nome da coluna, valor a ser buscado
+    // Exemplo: quando o usuário fazer login, é necessário verificar se o username digitado por ele existe no db
+    public boolean valueExists(String tableName, String columName, String value){
+        if(tableName == null || tableName.trim().isEmpty() || columName == null || columName.trim().isEmpty() || value == null || value.trim().isEmpty()){
+            System.out.println("Nome da tabela ou coluna nao pode ser nulo ou vazio.");
+            return false;
+        }
+
+        tableName = tableName.trim();
+        columName = columName.trim();
+
+        String query = "SELECT 1 FROM " + tableName + " WHERE " + columName + " = ? LIMIT 1";
+        try(PreparedStatement preparedStatement = this.connection.prepareStatement(query)) {
+            preparedStatement.setString(1, value);
+
+            try(ResultSet resulSet = preparedStatement.executeQuery()){
+                return resulSet.next();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean isConnectionValid(){
         try{
             return this.connection != null && !this.connection.isClosed();

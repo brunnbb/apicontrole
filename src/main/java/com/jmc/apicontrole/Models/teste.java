@@ -15,6 +15,9 @@ public class teste {
             dbDriver.setColumn("user", "username", 1, "lucas");
             teste = dbDriver.getColumn("user", "username", 1);
             System.out.println(teste);
+
+            boolean existe = dbDriver.valueExists("user", "username", "lucas");
+            System.out.println(existe);
         }else{
             System.out.println("Falha na conexao");
         }
