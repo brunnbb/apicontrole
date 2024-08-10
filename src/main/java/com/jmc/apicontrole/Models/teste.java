@@ -10,6 +10,11 @@ public class teste {
             String table_name = "colheita";
 
             dbDriver.displayTableData(table_name);
+            String teste = dbDriver.getColumn("user", "username", 1);
+            System.out.println(teste);
+            dbDriver.setColumn("user", "username", 1, "lucas");
+            teste = dbDriver.getColumn("user", "username", 1);
+            System.out.println(teste);
         }else{
             System.out.println("Falha na conexao");
         }
