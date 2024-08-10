@@ -18,6 +18,12 @@ public class teste {
 
             boolean existe = dbDriver.valueExists("user", "username", "lucas");
             System.out.println(existe);
+
+            String[] lista = dbDriver.getAllColumnValues("colheita", "id");
+
+            for (String s : lista) {
+                System.out.println(s);
+            }
         }else{
             System.out.println("Falha na conexao");
         }

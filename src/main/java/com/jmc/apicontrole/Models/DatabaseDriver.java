@@ -1,6 +1,8 @@
 package com.jmc.apicontrole.Models;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseDriver {
     private Connection connection;
@@ -123,9 +125,39 @@ public class DatabaseDriver {
             try(ResultSet resulSet = preparedStatement.executeQuery()){
                 return resulSet.next();
             }
-        }catch (SQLException e){
+        }catch(SQLException e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    // Função retorna todas as colunas de uma determinada tabela
+    // Parametros: nome da tabela, nome da coluna
+    // Exemplo: listar todos os id de apiários disponiveis para um determinado usuário
+    public String[] getAllColumnValues(String tableName, String columnName){
+        if(tableName == null || tableName.trim().isEmpty() || columnName == null || columnName.trim().isEmpty()){
+            System.out.println("Nome da tabela ou coluna não pode ser luno ou vazio.");
+            return null;
+        }
+
+        tableName = tableName.trim();
+        columnName = columnName.trim();
+
+        String query = "SELECT " + columnName + " FROM "  + tableName;
+
+        try(PreparedStatement preparedStatement = this.connection.prepareStatement(query)){
+            try(ResultSet resultSet = preparedStatement.executeQuery()){
+                List<String> valueColumn = new ArrayList<>();
+
+                while(resultSet.next()){
+                   valueColumn.add(resultSet.getString(columnName));
+                }
+
+                return valueColumn.toArray(new String[0]);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            return null;
         }
     }
 
