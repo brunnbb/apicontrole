@@ -1,0 +1,236 @@
+/* Estilos gerais para o TabPane */
+.tab-pane {
+    -fx-background-color: #FFFFFF; /* Cor de fundo geral */
+    -fx-padding: 20px; /* Espaçamento interno */
+}
+
+.tab-pane .tab {
+    -fx-background-color: #E79A3F;
+    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #E79A3F;
+    -fx-text-fill: white;
+}
+
+/* Estilos específicos para a aba Apiário */
+.apiario-tab {
+    -fx-background-color: #F9F9F9; /* Cor de fundo da aba Apiário */
+    -fx-padding: 20px; /* Espaçamento interno */
+}
+
+.apiario-tab Label {
+    -fx-font-size: 1em; /* Tamanho da fonte das labels */
+    -fx-font-weight: bold; /* Fonte em negrito */
+    -fx-text-fill: #333333; /* Cor do texto das labels */
+    -fx-label-padding: 5px; /* Espaçamento interno das labels */
+}
+
+.apiario-tab .text-field {
+    -fx-background-color: #FFFFFF; /* Cor de fundo dos campos de texto */
+    -fx-border-color: #CCCCCC; /* Cor da borda dos campos de texto */
+    -fx-border-width: 1px; /* Largura da borda dos campos de texto */
+    -fx-pref-height: 26px; /* Altura padrão dos campos de texto */
+    -fx-font-size: 1em; /* Tamanho da fonte dos campos de texto */
+    -fx-padding: 5px; /* Espaçamento interno dos campos de texto */
+}
+
+.apiario-tab .choice-box {
+    -fx-background-color: #FFFFFF; /* Cor de fundo das caixas de escolha */
+    -fx-border-color: #CCCCCC; /* Cor da borda das caixas de escolha */
+    -fx-border-width: 1px; /* Largura da borda das caixas de escolha */
+    -fx-pref-height: 26px; /* Altura padrão das caixas de escolha */
+    -fx-font-size: 1em; /* Tamanho da fonte das caixas de escolha */
+}
+
+.apiario-tab .text-field:hover,
+.apiario-tab .choice-box:hover {
+    -fx-border-color: #E79A3F; /* Cor da borda ao passar o mouse */
+}
+
+.apiario-tab .button {
+    -fx-background-color: #E79A3F; /* Cor de fundo do botão */
+    -fx-text-fill: black; /* Cor do texto do botão */
+    -fx-font-size: 1em; /* Tamanho da fonte do botão */
+    -fx-padding: 5px 10px; /* Espaçamento interno do botão */
+    -fx-border-radius: 5px; /* Bordas arredondadas do botão */
+    -fx-background-radius: 5px; /* Bordas arredondadas do botão */
+}
+
+.apiario-tab .button:hover {
+    -fx-background-color: #D6892F; /* Cor de fundo do botão ao passar o mouse */
+    -fx-cursor: hand;
+}
+
+.apiario-tab HBox {
+    -fx-spacing: 20px; /* Espaçamento entre os componentes dentro do HBox */
+}
+
+.apiario-tab VBox {
+    -fx-spacing: 20px; /* Espaçamento entre os componentes dentro do VBox */
+}
+
+.apiario-tab AnchorPane {
+    -fx-padding: 20px; /* Espaçamento interno do AnchorPane */
+}
+
+/* Estilos específicos para a aba Fórmulas */
+.formulas-tab {
+    -fx-background-color: #F9F9F9; /* Cor de fundo da aba Fórmulas */
+    -fx-padding: 10px; /* Espaçamento interno */
+}
+
+.formulas-tab Label {
+    -fx-font-size: 1.0em; /* Tamanho da fonte das labels (menor para ajustar ao espaço) */
+    -fx-font-weight: bold; /* Fonte em negrito */
+    -fx-text-fill: #333333; /* Cor do texto das labels */
+}
+
+.formulas-tab .text-field {
+    -fx-background-color: #FFFFFF; /* Cor de fundo dos campos de texto */
+    -fx-border-color: #CCCCCC; /* Cor da borda dos campos de texto */
+    -fx-border-width: 1px; /* Largura da borda dos campos de texto */
+    -fx-pref-height: 24px; /* Altura padrão dos campos de texto */
+    -fx-font-size: 1.0em; /* Tamanho da fonte dos campos de texto */
+    -fx-padding: 5px; /* Espaçamento interno dos campos de texto */
+}
+
+.formulas-tab .choice-box {
+    -fx-background-color: #FFFFFF; /* Cor de fundo das caixas de escolha */
+    -fx-border-color: #CCCCCC; /* Cor da borda das caixas de escolha */
+    -fx-border-width: 1px; /* Largura da borda das caixas de escolha */
+    -fx-pref-height: 24px; /* Altura padrão das caixas de escolha */
+    -fx-font-size: 1.0em; /* Tamanho da fonte das caixas de escolha */
+}
+
+.formulas-tab .text-field:hover,
+.formulas-tab .choice-box:hover {
+    -fx-border-color: #E79A3F; /* Cor da borda ao passar o mouse */
+}
+
+.formulas-tab .button {
+    -fx-background-color: #E79A3F; /* Cor de fundo do botão */
+    -fx-text-fill: black; /* Cor do texto do botão */
+    -fx-font-size: 1.0em; /* Tamanho da fonte do botão */
+    -fx-padding: 4px 8px; /* Espaçamento interno do botão */
+    -fx-border-radius: 5px; /* Bordas arredondadas do botão */
+    -fx-background-radius: 5px; /* Bordas arredondadas do botão */
+}
+
+.formulas-tab .button:hover {
+    -fx-background-color: #D6892F; /* Cor de fundo do botão ao passar o mouse */
+    -fx-cursor: hand;
+}
+
+.formulas-tab HBox {
+    -fx-spacing: 10px; /* Espaçamento entre os componentes dentro do HBox */
+}
+
+.formulas-tab VBox {
+    -fx-spacing: 10px; /* Espaçamento entre os componentes dentro do VBox */
+    -fx-background-color: #ebae65;
+}
+
+.formulas-tab .vbox-label {
+    -fx-text-fill: #ebae65; /* Cor das labels na VBox (tom mais claro de #E79A3F) */
+}
+
+.formulas-tab AnchorPane {
+    -fx-padding: 10px; /* Espaçamento interno do AnchorPane */
+}
+
+/* Estilo específico para o layout de fórmulas */
+.formulas-tab .ingredient-list {
+    -fx-padding: 10px; /* Espaçamento interno ao redor da lista de ingredientes */
+}
+
+.formulas-tab .ingredient-list Label {
+    -fx-font-size: 1.0em; /* Tamanho da fonte das labels na lista de ingredientes */
+    -fx-background-color: #ebae65; /* Cor de fundo das labels na lista de ingredientes */
+    -fx-text-fill: #333333; /* Cor do texto das labels */
+}
+
+/* Estilos específicos para a aba Colmeias */
+.colmeias-tab {
+    -fx-background-color: #F9F9F9; /* Cor de fundo da aba Colmeias */
+    -fx-padding: 20px; /* Espaçamento interno */
+}
+
+.colmeias-tab Label {
+    -fx-font-size: 1em; /* Tamanho da fonte das labels */
+    -fx-font-weight: bold; /* Fonte em negrito */
+    -fx-text-fill: #333333; /* Cor do texto das labels */
+}
+
+.colmeias-tab .text-field {
+    -fx-background-color: #FFFFFF; /* Cor de fundo dos campos de texto */
+    -fx-border-color: #CCCCCC; /* Cor da borda dos campos de texto */
+    -fx-border-width: 1px; /* Largura da borda dos campos de texto */
+    -fx-pref-height: 26px; /* Altura padrão dos campos de texto */
+    -fx-font-size: 1em; /* Tamanho da fonte dos campos de texto */
+    -fx-padding: 5px; /* Espaçamento interno dos campos de texto */
+}
+
+.colmeias-tab .choice-box {
+    -fx-background-color: #FFFFFF; /* Cor de fundo das caixas de escolha */
+    -fx-border-color: #CCCCCC; /* Cor da borda das caixas de escolha */
+    -fx-border-width: 1px; /* Largura da borda das caixas de escolha */
+    -fx-pref-height: 26px; /* Altura padrão das caixas de escolha */
+    -fx-font-size: 1em; /* Tamanho da fonte das caixas de escolha */
+}
+
+.colmeias-tab .text-field:hover,
+.colmeias-tab .choice-box:hover {
+    -fx-border-color: #E79A3F; /* Cor da borda ao passar o mouse */
+}
+
+.colmeias-tab .button {
+    -fx-background-color: #E79A3F; /* Cor de fundo do botão */
+    -fx-text-fill: black; /* Cor do texto do botão */
+    -fx-font-size: 1em; /* Tamanho da fonte do botão */
+    -fx-padding: 5px 10px; /* Espaçamento interno do botão */
+    -fx-border-radius: 5px; /* Bordas arredondadas do botão */
+    -fx-background-radius: 5px; /* Bordas arredondadas do botão */
+}
+
+.colmeias-tab .button:hover {
+    -fx-background-color: #D6892F; /* Cor de fundo do botão ao passar o mouse */
+    -fx-cursor: hand;
+}
+
+.colmeias-tab HBox {
+    -fx-spacing: 20px; /* Espaçamento entre os componentes dentro do HBox */
+}
+
+.colmeias-tab VBox {
+    -fx-spacing: 20px; /* Espaçamento entre os componentes dentro do VBox */
+}
+
+.colmeias-tab AnchorPane {
+    -fx-padding: 20px; /* Espaçamento interno do AnchorPane */
+}
+
+/* Estilos específicos para a Tabela de Colheitas */
+.colmeias-tab .table-view {
+    -fx-background-color: #FFFFFF; /* Cor de fundo da tabela */
+    -fx-border-color: #CCCCCC; /* Cor da borda da tabela */
+    -fx-border-width: 1px; /* Largura da borda da tabela */
+}
+
+.colmeias-tab .table-view .column-header {
+    -fx-background-color: #E79A3F; /* Cor de fundo do cabeçalho da tabela */
+    -fx-text-fill: white; /* Cor do texto no cabeçalho da tabela */
+}
+
+.colmeias-tab .table-view .column-header .label {
+    -fx-font-weight: bold; /* Fonte em negrito do cabeçalho da tabela */
+}
+
+/* Estilos específicos para as labels de valor */
+.colmeias-tab .value-label {
+    -fx-font-size: 1.0em; /* Tamanho da fonte das labels de valor */
+    -fx-text-fill: #E79A3F; /* Cor do texto das labels de valor */
+}
+
