@@ -24,6 +24,19 @@ public class teste {
             for (String s : lista) {
                 System.out.println(s);
             }
+
+            dbDriver.deleteRow("colheita", 64);
+            //dbDriver.createUser("luna", "senha123");
+            dbDriver.getColumn("user", "username", 2);
+
+            //dbDriver.createApiario(1, "São Paulo", "SP", "Centro", "Próximo ao parque", 10,
+                    //"Comercial", "2024-08-10", "Mata Atlântica", 500.0,
+                    //"Sim", "Não", 1000.0);
+
+            //dbDriver.createHive("Limpo", "Langstroth", "Apis mellifera", "Alta","Baixa", 5, "2024-08-10", "Ativa","Observação teste", 1);
+
+            dbDriver.createColheita(1, "2024-08-10", 50.0);
+
         }else{
             System.out.println("Falha na conexao");
         }

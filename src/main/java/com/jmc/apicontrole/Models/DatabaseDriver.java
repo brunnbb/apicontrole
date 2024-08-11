@@ -161,6 +161,176 @@ public class DatabaseDriver {
         }
     }
 
+    // Método que deleta um registro especifico da tabela
+    // Parametros: nome da tabela e id
+    // Exemplo: deletar user, apiario, colmeia ou colheita
+    public boolean deleteRow(String tableName, int id){
+        if(tableName == null || tableName.trim().isEmpty() || id < 0){
+            System.out.println("Nome da tabela  não pode ser nuno ou vazio e id deve ser maior que 0.");
+            return false;
+        }
+
+        tableName = tableName.trim();
+        String query =  "DELETE FROM " + tableName + " WHERE id = ?";
+
+        try(PreparedStatement preparedStatement = this.connection.prepareStatement(query)){
+            preparedStatement.setInt(1, id);
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if(rowsAffected > 0){
+                System.out.println("Registro da tabela " + tableName + " com id " + id + " foi apagada com sucesso");
+                return true;
+            }else{
+                System.out.println("Nenhum registro encontrado");
+                return false;
+            }
+        }catch(SQLException e){
+           e.printStackTrace();
+           return false;
+        }
+    }
+
+    public boolean createUser(String username, String password){
+        if(username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()){
+            System.out.println("username ou password nao podem ser nulos ou vazios");
+            return false;
+        }
+        String query = "INSERT INTO user (username, password) VALUES (?, ?)";
+        try(PreparedStatement preparedStatement = this.connection.prepareStatement(query)){
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if(rowsAffected > 0){
+                System.out.println("Usuário " + username + " criado com sucesso");
+                return true;
+            }else{
+                System.out.println("Falha ao criar usuário.");
+                return false;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean createApiario(int apicultorId, String municipio, String uf, String distrito,
+                                 String pontoDeReferencia, int quantidadeDeColmeias, String tipoDeApiario,
+                                 String dataDeInicio, String tipoDeVegetacao, Double areaTotal,
+                                 String presencaDeMataNativa, String presencaDePomar, Double producaoTotal) {
+        if(municipio == null || municipio.trim().isEmpty() ||
+                uf == null || uf.trim().isEmpty() ||
+                tipoDeApiario == null || tipoDeApiario.trim().isEmpty() ||
+                dataDeInicio == null || dataDeInicio.trim().isEmpty() ||
+                presencaDeMataNativa == null || (!presencaDeMataNativa.equals("Sim") && !presencaDeMataNativa.equals("Não")) ||
+                presencaDePomar == null || (!presencaDePomar.equals("Sim") && !presencaDePomar.equals("Não"))) {
+            System.out.println("Campos obrigatórios não podem ser nulos ou vazios e devem estar em um formato válido.");
+            return false;
+        }
+
+        String query = "INSERT INTO apiario (apicultor_id, municipio, uf, distrito, ponto_de_referencia, " +
+                "quantidade_de_colmeias, tipo_de_apiario, data_de_inicio, tipo_de_vegetacao, " +
+                "area_total, presenca_de_mata_nativa, presenca_de_pomar, producao_total) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try(PreparedStatement preparedStatement = this.connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, apicultorId);
+            preparedStatement.setString(2, municipio);
+            preparedStatement.setString(3, uf);
+            preparedStatement.setString(4, distrito);
+            preparedStatement.setString(5, pontoDeReferencia);
+            preparedStatement.setInt(6, quantidadeDeColmeias);
+            preparedStatement.setString(7, tipoDeApiario);
+            preparedStatement.setString(8, dataDeInicio);
+            preparedStatement.setString(9, tipoDeVegetacao);
+            preparedStatement.setDouble(10, areaTotal != null ? areaTotal : 0.0);
+            preparedStatement.setString(11, presencaDeMataNativa);
+            preparedStatement.setString(12, presencaDePomar);
+            preparedStatement.setDouble(13, producaoTotal != null ? producaoTotal : 0.0);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if(rowsAffected > 0) {
+                System.out.println("Apiário criado com sucesso.");
+                return true;
+            }else {
+                System.out.println("Falha ao criar o apiário.");
+                return false;
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean createHive(String grauDeLimpeza, String tipoDeColmeia, String especie, String produtividade,
+                              String agressividade, Integer quantidadeDeMelgueiras, String dataDeInstalacao,
+                              String statusDaColmeia, String observacoesAdicionais, int apiarioId) {
+        if(tipoDeColmeia == null || tipoDeColmeia.trim().isEmpty() ||
+                especie == null || especie.trim().isEmpty() ||
+                dataDeInstalacao == null || dataDeInstalacao.trim().isEmpty() ||
+                statusDaColmeia == null || statusDaColmeia.trim().isEmpty()) {
+            System.out.println("Campos obrigatórios não podem ser nulos ou vazios.");
+            return false;
+        }
+
+        String query = "INSERT INTO hive (grau_de_limpeza, tipo_de_colmeia, especie, produtividade, " +
+                "agressividade, quantidade_de_melgueiras, data_de_instalacao, status_da_colmeia, " +
+                "observacoes_adicionais, apiario_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try(PreparedStatement preparedStatement = this.connection.prepareStatement(query)) {
+            preparedStatement.setString(1, grauDeLimpeza);
+            preparedStatement.setString(2, tipoDeColmeia);
+            preparedStatement.setString(3, especie);
+            preparedStatement.setString(4, produtividade);
+            preparedStatement.setString(5, agressividade);
+            preparedStatement.setObject(6, quantidadeDeMelgueiras, java.sql.Types.INTEGER);
+            preparedStatement.setString(7, dataDeInstalacao);
+            preparedStatement.setString(8, statusDaColmeia);
+            preparedStatement.setString(9, observacoesAdicionais);
+            preparedStatement.setInt(10, apiarioId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if(rowsAffected > 0) {
+                System.out.println("Colmeia criada com sucesso.");
+                return true;
+            }else{
+                System.out.println("Falha ao criar a colmeia.");
+                return false;
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean createColheita(int hiveId, String dataColheita, double quantidadeMel) {
+        if(dataColheita == null || dataColheita.trim().isEmpty()) {
+            System.out.println("Data da colheita não pode ser nula ou vazia.");
+            return false;
+        }
+
+        String query = "INSERT INTO colheita (hive_id, data_colheita, quantidade_mel) VALUES (?, ?, ?)";
+
+        try(PreparedStatement preparedStatement = this.connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, hiveId);
+            preparedStatement.setString(2, dataColheita);
+            preparedStatement.setDouble(3, quantidadeMel);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if(rowsAffected > 0) {
+                System.out.println("Colheita criada com sucesso.");
+                return true;
+            }else {
+                System.out.println("Falha ao criar a colheita.");
+                return false;
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean isConnectionValid(){
         try{
             return this.connection != null && !this.connection.isClosed();
