@@ -4,12 +4,13 @@ module com.jmc.apicontrole {
     requires de.jensd.fx.glyphs.fontawesome;
     requires de.jensd.fx.glyphs.emojione;
     requires java.sql;
+    requires bcrypt;
     requires org.xerial.sqlitejdbc;
+    requires org.slf4j;
 
     opens com.jmc.apicontrole to javafx.fxml;
     exports com.jmc.apicontrole;
     exports com.jmc.apicontrole.Controllers;
     exports com.jmc.apicontrole.Models;
-    exports com.jmc.apicontrole.Views;
     opens com.jmc.apicontrole.Controllers to javafx.fxml;
 }

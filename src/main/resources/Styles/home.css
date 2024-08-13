@@ -32,7 +32,7 @@
     -fx-background-color: #FFFFFF;
     -fx-border-color: #CCCCCC;
     -fx-border-width: 1px;
-    -fx-pref-height: 26px;
+    -fx-pref-height: 30px;
     -fx-font-size: 1em;
     -fx-padding: 5px;
 }
@@ -41,8 +41,18 @@
     -fx-background-color: #FFFFFF;
     -fx-border-color: #CCCCCC;
     -fx-border-width: 1px;
-    -fx-pref-height: 26px;
-    -fx-font-size: 1em;
+    -fx-pref-height: 35px;
+    -fx-font-size: 1.0em;
+}
+
+.apiario-tab .choice-box .list-cell {
+    -fx-font-size: 0.8em;
+    -fx-text-fill: #333333;
+}
+
+.apiario-tab .choice-box .list-cell:focused {
+    -fx-background-color: #E79A3F;
+    -fx-text-fill: white;
 }
 
 .apiario-tab .text-field:hover,
@@ -101,7 +111,7 @@
     -fx-background-color: #FFFFFF;
     -fx-border-color: #CCCCCC;
     -fx-border-width: 1px;
-    -fx-pref-height: 24px;
+    -fx-pref-height: 28px;
     -fx-font-size: 1.0em;
 }
 

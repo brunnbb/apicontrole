@@ -10,7 +10,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Home.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("ApiControle");
         stage.setScene(scene);
