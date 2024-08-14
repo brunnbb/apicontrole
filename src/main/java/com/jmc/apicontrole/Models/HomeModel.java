@@ -1,17 +1,11 @@
 package com.jmc.apicontrole.Models;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.jmc.apicontrole.Models.Classes.*;
@@ -25,7 +19,6 @@ public class HomeModel {
             System.out.println("FALHA EM CONECTAR");
         }
     }
-
 
     //Para tela de apiario
     public Apiario getApiarioData(int apiarioId) {
@@ -103,11 +96,36 @@ public class HomeModel {
         }
     }
 
+    public Double getProdTotal(int apiarioId) {
+        String query = "SELECT producao_total FROM apiarios WHERE apiario_id = ?";
+        double prodTotal = 0.0;
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, apiarioId);
+            ResultSet rs = stmt.executeQuery();
 
+            if (rs.next()) {
+                prodTotal = rs.getDouble("producao_total");
+            }
 
+        } catch (SQLException e) {
+            System.out.println("Problem with getProdTotal: " + e.getMessage());
+        }
+        return prodTotal;
+    }
+
+    public void setProdTotal(int apiarioId, double prodTotal) {
+        String query = "UPDATE apiarios SET producao_total = ? WHERE apiario_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setDouble(1, prodTotal);
+            stmt.setInt(2, apiarioId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar a produção total do apiário: " + e.getMessage());
+        }
+    }
 
     //Para tela de colmeias
-    public void insertColmeia(int apiarioId){
+    public void insertColmeia(int apiarioId) {
         String sql = "insert into hive (apiario_id) values (?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -181,6 +199,7 @@ public class HomeModel {
                 colmeia.setStatusDaColmeia(rs.getString("status_da_colmeia"));
                 colmeia.setObservacoesAdicionais(rs.getString("observacoes_adicionais"));
                 colmeia.setApiarioId(rs.getInt("apiario_id"));
+                colmeia.setProducaoColmeia(rs.getDouble("prod_colmeia"));
             }
         } catch (SQLException e) {
             System.out.println("Erro ao pegar o dado da colmeia: " + e.getMessage());
@@ -214,19 +233,30 @@ public class HomeModel {
         }
     }
 
+    public Double getColmeiaProd(int hiveId) {
+        double prod = 0;
 
-
-    //Later
-    public Colheita getColheitaData(int colheitaId) {
-        Colheita colheita = null;
-        return colheita;
+        String query = "SELECT prod_colmeia FROM hive WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, hiveId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                prod = rs.getDouble("prod_colmeia");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error with getColmeiaProd: " + e.getMessage());
+        }
+        return prod;
     }
 
-    public void updateColheitaData(Colheita colheita) {
-
-    }
-
-    public void setFormulas(){
-
+    public void setColmeiaProd(int hiveId, double prod) {
+        String query = "UPDATE hive SET prod_colmeia = ? where id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setDouble(1, prod);
+            stmt.setInt(2, hiveId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar dados da colmeia: " + e.getMessage());
+        }
     }
 }

@@ -15,6 +15,7 @@ public class Colmeia {
     private String statusDaColmeia;
     private String observacoesAdicionais;
     private int apiarioId;
+    private double producaoColmeia;
 
     public Colmeia() {
 
@@ -136,5 +137,13 @@ public class Colmeia {
 
     public void setApiarioId(int apiarioId) {
         this.apiarioId = apiarioId;
+    }
+
+    public double getProducaoColmeia() {
+        return producaoColmeia;
+    }
+
+    public void setProducaoColmeia(double producaoColmeia) {
+        this.producaoColmeia = producaoColmeia;
     }
 }

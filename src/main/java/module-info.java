@@ -8,6 +8,7 @@ module com.jmc.apicontrole {
     requires bcrypt;
     requires org.xerial.sqlitejdbc;
     requires org.slf4j;
+    requires java.desktop;
 
     opens com.jmc.apicontrole to javafx.fxml;
     exports com.jmc.apicontrole;
