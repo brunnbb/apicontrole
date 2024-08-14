@@ -11,12 +11,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class HomeController extends Controller {
 
-    //Apiario tela
+    //Tela do apiario
     @FXML
     public TextField apicultor, municipio, uf, distrito;
     @FXML
@@ -30,7 +33,7 @@ public class HomeController extends Controller {
     @FXML
     public Button atualizar_button, sair_button;
 
-    //Colmeia tela
+    //Tela de colmeias
     @FXML
     ChoiceBox<String> colmeia_id, status, tipo_de_colmeia;
     @FXML
@@ -44,8 +47,21 @@ public class HomeController extends Controller {
     @FXML
     Button add_colmeia_button, mudar_colmeia_button, salvar_colmeia_button, add_colheita_button;
 
+    //Tela de formulas
+    @FXML
+    TextField peso_desejado_field;
+    @FXML
+    Button calc_button;
+    @FXML
+    Label form1_lbl_1, form1_lbl_2, form1_lbl_3, form1_lbl_4, form1_lbl_5, form1_lbl_6, form1_lbl_7, form1_lbl_8;
+    @FXML
+    Label form2_lbl_1,form2_lbl_2,form2_lbl_3,form2_lbl_4;
+
     private HomeModel homeModel;
     private Apiario apiario;
+    private List<Colmeia> listaColmeias;
+    private Formula formulaProteica;
+    private Formula formulaCalorica;
 
     @Override
     public void initialize() {
@@ -71,12 +87,14 @@ public class HomeController extends Controller {
         salvar_colmeia_button.setOnAction(_ -> handleSalvarColmeia());
         //add_colheita_button.setOnAction(_ -> handleAddColheita());
 
+        calc_button.setOnAction(_->handleCalcular());
     }
 
     public void setIds(int apiarioId) {
         apiario = homeModel.getApiarioData(apiarioId);
         loadApiariodata();
         loadColmeias();
+        loadFormulas();
     }
 
     public void loadApiariodata() {
@@ -144,10 +162,19 @@ public class HomeController extends Controller {
         }
     }
 
-    public void loadColmeias(){
-        List<String> listaColmeias = homeModel.getColmeiasIds(apiario.getApiarioId());
+    public void loadColmeias() {
+        List<String> lista = homeModel.getColmeiasIds(apiario.getApiarioId());
+        listaColmeias = new ArrayList<>();
         colmeia_id.getItems().clear();
-        colmeia_id.getItems().addAll(listaColmeias);
+
+        int i = 1;
+        for (String s : lista) {
+            int colmeiaId = Integer.parseInt(s);
+            Colmeia colmeia = new Colmeia(colmeiaId, apiario.getApiarioId(), i);
+            colmeia_id.getItems().add(String.valueOf(i));
+            listaColmeias.add(colmeia);
+            i++;
+        }
         qtde_colmeias_lbl.setText(String.valueOf(colmeia_id.getItems().size()));
     }
 
@@ -159,9 +186,17 @@ public class HomeController extends Controller {
     }
 
     public void handleCarregarColmeia() {
-        try{
-            int id = Integer.parseInt(colmeia_id.getValue());
-            Colmeia colmeia = homeModel.getColmeiaData(id);
+        try {
+            int numeroDisplay = Integer.parseInt(colmeia_id.getValue());
+
+            Colmeia colmeiaSelecionada = null;
+            for (Colmeia colmeia : listaColmeias) {
+                if (colmeia.getNumeroDisplay() == numeroDisplay) {
+                    colmeiaSelecionada = colmeia;
+                }
+            }
+
+            Colmeia colmeia = homeModel.getColmeiaData(colmeiaSelecionada.getId());
 
             status.setValue(colmeia.getStatusDaColmeia());
             tipo_de_colmeia.setValue(colmeia.getTipoDeColmeia());
@@ -176,7 +211,7 @@ public class HomeController extends Controller {
             obs_adicionais.setText(colmeia.getObservacoesAdicionais());
 
         } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR,"Alerta","Selecione uma colmeia para ser carregada");
+            showAlert(Alert.AlertType.ERROR, "Alerta", "Selecione uma colmeia para ser carregada");
         }
     }
 
@@ -184,14 +219,23 @@ public class HomeController extends Controller {
 
         String selectedColmeiaId = colmeia_id.getValue();
         if (selectedColmeiaId == null || selectedColmeiaId.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR,"Alerta","Selecione alguma colmeia");
+            showAlert(Alert.AlertType.ERROR, "Alerta", "Selecione alguma colmeia");
             return;
         }
 
         try {
-            int colmeiaId = Integer.parseInt(selectedColmeiaId);
+            int numeroDisplay = Integer.parseInt(selectedColmeiaId);
+
+            Colmeia colmeiaSelecionada = null;
+            for (Colmeia colmeia : listaColmeias) {
+                if (colmeia.getNumeroDisplay() == numeroDisplay) {
+                    colmeiaSelecionada = colmeia;
+                }
+            }
+
+
             Colmeia colmeia = new Colmeia();
-            colmeia.setId(colmeiaId);
+            colmeia.setId(colmeiaSelecionada.getId());
             colmeia.setGrauDeLimpeza(grau_de_limpeza.getValue());
             colmeia.setTipoDeColmeia(tipo_de_colmeia.getValue());
             colmeia.setEspecie(especie.getValue());
@@ -209,7 +253,7 @@ public class HomeController extends Controller {
 
             homeModel.updateColmeiaData(colmeia);
 
-            showAlert(Alert.AlertType.INFORMATION, "Sucesso","Sucesso em salvar as informações da colmeia");
+            showAlert(Alert.AlertType.INFORMATION, "Sucesso", "Sucesso em salvar as informações da colmeia");
 
         } catch (NumberFormatException e) {
             System.out.println("Erro ao converter valores numéricos: " + e.getMessage());
@@ -219,6 +263,58 @@ public class HomeController extends Controller {
 
     }
 
+    public void loadFormulas() {
+        HashMap<Double, Double> mapaFormulaProteica = new HashMap<>();
+        mapaFormulaProteica.put(0.15, 0.0);
+        mapaFormulaProteica.put(0.15, 0.0);
+        mapaFormulaProteica.put(0.285, 0.0);
+        mapaFormulaProteica.put(0.33, 0.0);
+        mapaFormulaProteica.put(0.05, 0.0);
+        mapaFormulaProteica.put(0.01, 0.0);
+        mapaFormulaProteica.put(0.005, 0.0);
+        mapaFormulaProteica.put(0.02, 0.0);
+
+        HashMap<Double, Double> mapaFormulaCalorica = new HashMap<>();
+        mapaFormulaCalorica.put(0.6845, 0.0);
+        mapaFormulaCalorica.put(0.2738, 0.0);
+        mapaFormulaCalorica.put(0.0007, 0.0);
+        mapaFormulaCalorica.put(0.041, 0.0);
+
+        formulaProteica = new Formula(mapaFormulaProteica);
+        formulaCalorica = new Formula(mapaFormulaCalorica);
+    }
+
+    public void handleCalcular() {
+        try{
+            double peso = Double.parseDouble(peso_desejado_field.getText());
+            if(peso < 0){
+                throw new NumberFormatException();
+            }
+
+            formulaCalorica.calcularValores(peso);
+            formulaProteica.calcularValores(peso);
+
+            Map<Double, Double> respostasProteica = formulaProteica.getMapaFormula();
+
+            form1_lbl_1.setText(String.valueOf(respostasProteica.get(0.15)));
+            form1_lbl_2.setText(String.valueOf(respostasProteica.get(0.15)));
+            form1_lbl_3.setText(String.valueOf(respostasProteica.get(0.285)));
+            form1_lbl_4.setText(String.valueOf(respostasProteica.get(0.33)));
+            form1_lbl_5.setText(String.valueOf(respostasProteica.get(0.05)));
+            form1_lbl_6.setText(String.valueOf(respostasProteica.get(0.01)));
+            form1_lbl_7.setText(String.valueOf(respostasProteica.get(0.005)));
+            form1_lbl_8.setText(String.valueOf(respostasProteica.get(0.02)));
+
+            Map<Double,Double> respostasCalorica = formulaCalorica.getMapaFormula();
+            form2_lbl_1.setText(String.valueOf(respostasCalorica.get(0.6845)));
+            form2_lbl_2.setText(String.valueOf(respostasCalorica.get(0.2738)));
+            form2_lbl_3.setText(String.valueOf(respostasCalorica.get(0.0007)));
+            form2_lbl_4.setText(String.valueOf(respostasCalorica.get(0.041)));
+
+        }catch (NumberFormatException e){
+            showAlert(Alert.AlertType.ERROR, "Alerta", "Digite um número real positivo");
+        }
+    }
 }
 
 

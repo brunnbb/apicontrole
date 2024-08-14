@@ -3,6 +3,7 @@ package com.jmc.apicontrole.Models.Classes;
 import java.time.LocalDate;
 
 public class Apiario {
+    private int numeroDisplay;
     private int apiarioId;
     private int apicultorId;
     private String apicultorNome;
@@ -23,9 +24,10 @@ public class Apiario {
 
     }
 
-    public Apiario(int apiarioId, int apicultorId) {
+    public Apiario(int apicultorId, int apiarioId, int numeroDisplay) {
         this.apiarioId = apiarioId;
         this.apicultorId = apicultorId;
+        this.numeroDisplay = numeroDisplay;
     }
 
     public Apiario(int apiarioId, int apicultorId, String apicultorNome, String municipio, String uf, String distrito,
@@ -47,6 +49,14 @@ public class Apiario {
         this.presencaDeMataNativa = presencaDeMataNativa;
         this.presencaDePomar = presencaDePomar;
         this.producaoTotal = producaoTotal;
+    }
+
+    public int getNumeroDisplay() {
+        return numeroDisplay;
+    }
+
+    public void setNumeroDisplay(int numeroDisplay) {
+        this.numeroDisplay = numeroDisplay;
     }
 
     public double getProducaoTotal() {

@@ -1,5 +1,6 @@
 package com.jmc.apicontrole.Controllers;
 
+import com.jmc.apicontrole.Models.Classes.Apiario;
 import com.jmc.apicontrole.Models.UserModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserController extends Controller {
@@ -21,6 +23,7 @@ public class UserController extends Controller {
 
     private UserModel userModel;
     private int userId;
+    private List<Apiario> listaApiarios;
 
     @Override
     public void initialize() {
@@ -42,8 +45,17 @@ public class UserController extends Controller {
 
     public void loadChoiceBox() {
         List<String> lista = userModel.getListaApiarios(userId);
+        listaApiarios = new ArrayList<>();
         apiario_choicebox.getItems().clear();
-        apiario_choicebox.getItems().addAll(lista);
+
+        int i = 1;
+        for (String s : lista) {
+            int apiarioId = Integer.parseInt(s);
+            Apiario apiario = new Apiario(userId, apiarioId, i);
+            apiario_choicebox.getItems().add(String.valueOf(i));
+            listaApiarios.add(apiario);
+            i++;
+        }
     }
 
     public void handleIr() {
@@ -52,9 +64,16 @@ public class UserController extends Controller {
             Parent root = loader.load();
 
             try {
-                int apiarioId = Integer.parseInt(apiario_choicebox.getValue());
+                int numeroDeDisplay= Integer.parseInt(apiario_choicebox.getValue());
+                Apiario apiarioSelecionado = null;
+                for(Apiario apiario : listaApiarios) {
+                    if(apiario.getNumeroDisplay() == numeroDeDisplay) {
+                        apiarioSelecionado = apiario;
+                    }
+                }
+
                 HomeController homeController = loader.getController();
-                homeController.setIds(apiarioId);
+                homeController.setIds(apiarioSelecionado.getApiarioId());
 
                 Stage currentStage = (Stage) ir_button.getScene().getWindow();
                 currentStage.setScene(new Scene(root));

@@ -3,6 +3,7 @@ package com.jmc.apicontrole.Models.Classes;
 import java.time.LocalDate;
 
 public class Colmeia {
+    private int numeroDisplay;
     private int id;
     private String grauDeLimpeza;
     private String tipoDeColmeia;
@@ -19,6 +20,12 @@ public class Colmeia {
 
     }
 
+    public Colmeia(int id, int apiarioId, int NumeroDisplay) {
+        this.id = id;
+        this.apiarioId = apiarioId;
+        this.numeroDisplay = NumeroDisplay;
+    }
+
     public Colmeia(int id, String grauDeLimpeza, String tipoDeColmeia, String especie, String produtividade,
                    String agressividade, int quantidadeDeMelgueiras, LocalDate dataDeInstalacao, String statusDaColmeia,
                    String observacoesAdicionais, int apiarioId) {
@@ -33,6 +40,14 @@ public class Colmeia {
         this.statusDaColmeia = statusDaColmeia;
         this.observacoesAdicionais = observacoesAdicionais;
         this.apiarioId = apiarioId;
+    }
+
+    public int getNumeroDisplay() {
+        return numeroDisplay;
+    }
+
+    public void setNumeroDisplay(int numeroDisplay) {
+        this.numeroDisplay = numeroDisplay;
     }
 
     public int getId() {

@@ -1,6 +1,7 @@
 module com.jmc.apicontrole {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
     requires de.jensd.fx.glyphs.fontawesome;
     requires de.jensd.fx.glyphs.emojione;
     requires java.sql;

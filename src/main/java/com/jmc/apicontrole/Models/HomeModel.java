@@ -216,24 +216,6 @@ public class HomeModel {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //Later
     public Colheita getColheitaData(int colheitaId) {
         Colheita colheita = null;
@@ -241,6 +223,10 @@ public class HomeModel {
     }
 
     public void updateColheitaData(Colheita colheita) {
+
+    }
+
+    public void setFormulas(){
 
     }
 }

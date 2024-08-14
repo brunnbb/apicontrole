@@ -1,6 +1,5 @@
 package com.jmc.apicontrole.Controllers;
 
-import com.jmc.apicontrole.Models.SignUpModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import com.jmc.apicontrole.Models.SignUpModel;
 
 public class SignUpController extends Controller {
     @FXML
@@ -34,6 +34,7 @@ public class SignUpController extends Controller {
         if (model.isUsernameAvailable(username)) {
             showAlert(Alert.AlertType.INFORMATION, "Criação de um novo usuário bem sucedida", "Bem-vindo " + username + "!");
             model.insertUser(username, password);
+            handleReturn();
         } else {
             showAlert(Alert.AlertType.ERROR, "Alerta", "Esse nome de usuário já está em uso");
         }

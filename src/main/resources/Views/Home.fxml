@@ -104,7 +104,7 @@
     </Tab>
     <Tab text="Fórmulas">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="formulas-tab">
-            <HBox layoutX="46.0" layoutY="198.0" prefHeight="262.0" prefWidth="325.0">
+            <HBox fx:id="form_proteica_1" layoutX="46.0" layoutY="198.0" prefHeight="262.0" prefWidth="325.0">
                 <VBox prefHeight="262.0" prefWidth="126.0" styleClass="ingredient-list">
                     <Label text="Ingredientes:" />
                     <Label text="Extrato de soja:" />
@@ -129,22 +129,20 @@
                 </VBox>
                 <VBox alignment="TOP_CENTER" prefHeight="262.0" prefWidth="82.0" styleClass="ingredient-list">
                     <Label text="Peso final" />
-                    <Label text="0" />
-                    <Label text="0" />
-                    <Label text="0" />
-                    <Label text="0" />
-                    <Label text="0" />
-                    <Label text="0" />
-                    <Label text="0" />
-                    <Label text="0" />
+                    <Label fx:id="form1_lbl_1" text="0" />
+                    <Label fx:id="form1_lbl_2" text="0" />
+                    <Label fx:id="form1_lbl_3" text="0" />
+                    <Label fx:id="form1_lbl_4" text="0" />
+                    <Label fx:id="form1_lbl_5" text="0" />
+                    <Label fx:id="form1_lbl_6" text="0" />
+                    <Label fx:id="form1_lbl_7" text="0" />
+                    <Label fx:id="form1_lbl_8" text="0" />
                 </VBox>
             </HBox>
-            <Label layoutX="327.0" layoutY="65.0" text="Peso desejado: " />
-            <TextField fx:id="peso_desejado_field" layoutX="428.0" layoutY="64.0" />
-            <Button layoutX="375.0" layoutY="114.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Calcular" />
-            <ChoiceBox fx:id="form_caloricas_field" layoutX="651.0" layoutY="66.0" prefWidth="150.0" />
-            <ChoiceBox fx:id="form_proteicas_field" layoutX="105.0" layoutY="66.0" prefWidth="150.0" />
-            <HBox layoutX="497.0" layoutY="198.0" prefHeight="262.0" prefWidth="383.0">
+            <Label layoutX="309.0" layoutY="63.0" text="Peso desejado (kg): " />
+            <TextField fx:id="peso_desejado_field" layoutX="423.0" layoutY="57.0" />
+            <Button fx:id="calc_button" layoutX="380.0" layoutY="114.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Calcular" />
+            <HBox fx:id="form_calorica_1" layoutX="497.0" layoutY="198.0" prefHeight="262.0" prefWidth="383.0">
                 <VBox prefHeight="230.0" prefWidth="189.0" styleClass="ingredient-list">
                     <Label text="Ingredientes:" />
                     <Label text="Açúcar VHP" />
@@ -161,18 +159,15 @@
                 </VBox>
                 <VBox alignment="TOP_CENTER" prefHeight="230.0" prefWidth="94.0" styleClass="ingredient-list">
                     <Label text="Peso final" />
-                    <Label text="0" />
-                    <Label text="0" />
-                    <Label text="0" />
-                    <Label text="0" />
+                    <Label fx:id="form2_lbl_1" text="0" />
+                    <Label fx:id="form2_lbl_2" text="0" />
+                    <Label fx:id="form2_lbl_3" text="0" />
+                    <Label fx:id="form2_lbl_4" text="0" />
                 </VBox>
             </HBox>
-            <Label layoutX="651.0" layoutY="43.0" text="Fórmulas Calóricas" />
-            <Label layoutX="105.0" layoutY="40.0" prefHeight="18.0" prefWidth="194.0" text="Fórmulas Protéicas" />
+            <Label layoutX="626.0" layoutY="63.0" prefHeight="18.0" prefWidth="179.0" text="Fórmula Calórica da Epagri (kg)" />
+            <Label layoutX="57.0" layoutY="63.0" prefHeight="18.0" prefWidth="222.0" text="Fórmula Protéica de Robson Raad (kg)" />
         </AnchorPane>
-    </Tab>
-    <Tab text="Calendário">
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
     </Tab>
     <Tab text="Galeria">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
