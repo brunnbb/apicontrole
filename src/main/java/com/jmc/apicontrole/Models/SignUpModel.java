@@ -4,11 +4,9 @@ import java.sql.*;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-public class SignUpModel {
-    Connection connection;
+public class SignUpModel implements Model{
 
     public SignUpModel() {
-        connection = DatabaseConnection.Connector();
         if (connection == null) {
             System.out.println("FALHA EM CONECTAR");
         }

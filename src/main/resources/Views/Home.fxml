@@ -162,16 +162,13 @@
     </Tab>
     <Tab text="Calendário">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="apiario-tab">
-            <DatePicker fx:id="dataPicker" layoutX="20.0" layoutY="20.0" prefHeight="35.0" prefWidth="174.0" />
-            <ChoiceBox fx:id="tipoEventoChoiceBox" layoutX="200.0" layoutY="20.0" prefHeight="29.0" prefWidth="54.0" />
-            <Button fx:id="adicionarButton" layoutX="400.0" layoutY="20.0" mnemonicParsing="false" text="Adicionar Compromisso" />
+            <DatePicker fx:id="dataPicker" layoutX="20.0" layoutY="20.0" prefHeight="35.0" prefWidth="138.0" />
+            <ChoiceBox fx:id="tipoEventoChoiceBox" layoutX="165.0" layoutY="20.0" prefHeight="29.0" prefWidth="253.0" />
+            <Button fx:id="adicionarButton" layoutX="452.0" layoutY="20.0" mnemonicParsing="false" text="Adicionar Compromisso" />
             <Button fx:id="removerButton" layoutX="620.0" layoutY="20.0" mnemonicParsing="false" text="Remover Compromisso" />
             <ScrollPane fx:id="compromissosScrollPane" layoutX="20.0" layoutY="70.0" prefHeight="500.0" prefWidth="760.0">
                 <VBox fx:id="compromissosVBox" />
             </ScrollPane>
         </AnchorPane>
-    </Tab>
-    <Tab text="Galeria">
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
     </Tab>
 </TabPane>

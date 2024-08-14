@@ -3,11 +3,9 @@ package com.jmc.apicontrole.Models;
 import java.sql.*;
 import java.util.*;
 
-public class UserModel {
-    Connection connection;
+public class UserModel implements Model {
 
     public UserModel() {
-        connection = DatabaseConnection.Connector();
         if (connection == null) {
             System.out.println("FALHA EM CONECTAR");
         }

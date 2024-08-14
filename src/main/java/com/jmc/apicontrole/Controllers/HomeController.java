@@ -2,11 +2,14 @@ package com.jmc.apicontrole.Controllers;
 
 import com.jmc.apicontrole.Models.Classes.*;
 import com.jmc.apicontrole.Models.HomeModel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -59,11 +62,26 @@ public class HomeController extends Controller {
     @FXML
     Label form2_lbl_1, form2_lbl_2, form2_lbl_3, form2_lbl_4;
 
+    //Tela de calendario
+    @FXML
+    private DatePicker dataPicker;
+    @FXML
+    private ChoiceBox<String> tipoEventoChoiceBox;
+    @FXML
+    private VBox compromissosVBox;
+    @FXML
+    private Button adicionarButton;
+    @FXML
+    private Button removerButton;
+    private Label compromissoSelecionado;
+
     private HomeModel homeModel;
     private Apiario apiario;
     private List<Colmeia> listaColmeias;
     private Formula formulaProteica;
     private Formula formulaCalorica;
+
+    protected int apiarioId = 0;
 
     @Override
     public void initialize() {
@@ -90,13 +108,20 @@ public class HomeController extends Controller {
         add_colheita_button.setOnAction(_ -> handleAdicionarColheita());
 
         calc_button.setOnAction(_ -> handleCalcular());
+
+        tipoEventoChoiceBox.getItems().addAll("Inspeção", "Colheita", "Limpeza", "Troca de Rainha", "Alimentar com fórmula calórica", "Alimentar com fórmula proteica");
+        adicionarButton.setOnAction(this::adicionarCompromisso);
+        removerButton.setOnAction(this::removerCompromisso);
+
     }
 
     public void setIds(int apiarioId) {
         apiario = homeModel.getApiarioData(apiarioId);
+        this.apiarioId = apiarioId;
         loadApiariodata();
         loadColmeias();
         loadFormulas();
+        atualizarCompromissos();
 
     }
 
@@ -364,6 +389,48 @@ public class HomeController extends Controller {
 
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Alerta", "Digite um número real positivo");
+        }
+    }
+
+    private void adicionarCompromisso(ActionEvent event){
+        LocalDate data = dataPicker.getValue();
+        String tipoEvento = tipoEventoChoiceBox.getValue();
+
+        if (data == null || tipoEvento == null){
+            return;
+        }
+
+        homeModel.adicionarEvento(apiarioId, data, tipoEvento);
+        atualizarCompromissos();
+    }
+
+    private void removerCompromisso(ActionEvent event){
+        if (compromissoSelecionado != null) {
+            int eventoId = Integer.parseInt(compromissoSelecionado.getId());
+            homeModel.removerEvento(eventoId);
+            compromissoSelecionado = null;
+            atualizarCompromissos();
+        }
+    }
+
+    private void selecionarCompromisso(MouseEvent event){
+        if (compromissoSelecionado != null) {
+            compromissoSelecionado.setStyle("");
+        }
+
+        compromissoSelecionado = (Label) event.getSource();
+        compromissoSelecionado.setStyle("-fx-background-color: orange;");
+    }
+
+    private void atualizarCompromissos(){
+        compromissosVBox.getChildren().clear();
+        List<Evento> eventos = homeModel.getEventos(apiarioId);
+
+        for(Evento evento : eventos){
+            Label compromisso = new Label(evento.getData() + " - " + evento.getDescricao());
+            compromisso.setId(String.valueOf(evento.getId()));
+            compromisso.setOnMouseClicked(this::selecionarCompromisso);
+            compromissosVBox.getChildren().add(compromisso);
         }
     }
 

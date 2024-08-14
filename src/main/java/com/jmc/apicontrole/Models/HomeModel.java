@@ -10,11 +10,9 @@ import java.util.List;
 
 import com.jmc.apicontrole.Models.Classes.*;
 
-public class HomeModel {
-    Connection connection;
+public class HomeModel implements Model {
 
     public HomeModel() {
-        connection = DatabaseConnection.Connector();
         if (connection == null) {
             System.out.println("FALHA EM CONECTAR");
         }
@@ -258,5 +256,54 @@ public class HomeModel {
         } catch (SQLException e) {
             System.out.println("Erro ao atualizar dados da colmeia: " + e.getMessage());
         }
+    }
+
+    //Para tela do Calendario
+    public void adicionarEvento(int apiarioId, LocalDate data, String descricao) {
+        String query = "INSERT INTO event (apiario_id, data, descricao) VALUES (?, ?, ?)";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setInt(1, apiarioId);
+            pstmt.setDate(2, Date.valueOf(data)); // Converter LocalDate para SQL Date
+            pstmt.setString(3, descricao);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erro ao adicionar evento: " + e.getMessage());
+        }
+    }
+
+    // Remover um evento pelo ID
+    public void removerEvento(int eventoId){
+        String query = "DELETE FROM event WHERE id = ?";
+
+        try(PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setInt(1, eventoId);
+            pstmt.executeUpdate();
+        }catch (SQLException e){
+            System.out.println("Erro ao remover evento: " + e.getMessage());
+        }
+    }
+
+    // Recuperar todos os eventos para um apiário específico
+    public List<Evento> getEventos(int apiarioId){
+        List<Evento> eventos = new ArrayList<>();
+        String query = "SELECT * FROM event WHERE apiario_id = ?";
+
+        try(PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setInt(1, apiarioId);
+            try(ResultSet rs = pstmt.executeQuery()){
+                while(rs.next()){
+                    Evento evento = new Evento();
+                    evento.setId(rs.getInt("id"));
+                    evento.setApiarioId(rs.getInt("apiario_id"));
+                    evento.setData(rs.getDate("data").toLocalDate());
+                    evento.setDescricao(rs.getString("descricao"));
+                    eventos.add(evento);
+                }
+            }
+        }catch(SQLException e){
+            System.out.println("Erro ao recuperar eventos: " + e.getMessage());
+        }
+        return eventos;
     }
 }
